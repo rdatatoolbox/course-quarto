@@ -1,4 +1,4 @@
-## :mortar_board: Introduction to Rmarkdown <img src="https://raw.githubusercontent.com/quarto-dev/quarto-r/main/man/figures/quarto.png" height="120" align="right"/>
+## :mortar_board: Introduction to Quarto <img src="https://raw.githubusercontent.com/quarto-dev/quarto-r/main/man/figures/quarto.png" align="right"/>
 
 [![License: CC
 BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgreen.svg)](https://choosealicense.com/licenses/cc-by-4.0/)
