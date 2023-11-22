@@ -1,0 +1,20 @@
+Package: course.quarto
+Title: Introduction to Quarto
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "François",
+           family = "Guilhaumon",
+           role = c("aut", "cre"),
+           email = "francois.guilhaumon@ird.fr",
+           comment = c(ORCID = "0000-0003-4707-8932"))
+Description: Online presentation 'Introduction to Quarto'. This course is 
+    part of the workshop 'Data Toolbox for Reproducible Research in Ecology' 
+    co-organized by the FRB-CESAB (<https://www.fondationbiodiversite.fr/en/about-the-foundation/le-cesab/>)
+    and the GdR EcoStat (<https://sites.google.com/site/gdrecostat/>).
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+  quarto
