@@ -1205,16 +1205,30 @@ format:
     toc: true
 ```
 
+## Presentations
 
-# Resources
+<br> <br>
 
-## `Quarto` resources
+> - The [official guide](https://quarto.org/docs/presentations/revealjs/), as always, and the [official reference](https://quarto.org/docs/reference/formats/presentations/revealjs.html).
+
+<br>
+
+<br>
+
+> - [Explore the source of this one.](https://github.com/rdatatoolbox/course-quarto/blob/main/sections/quarto.qmd)
+
+
+## Resources
+
+### `Quarto` resources
 
 -   [`Quarto` guide](https://quarto.org/docs/guide/)
 -   [Markdown syntax](https://quarto.org/docs/authoring/markdown-basics.html)
 -   [RevealJS guide](https://quarto.org/docs/presentations/revealjs/)
 
-## Slides resources
+### Slides resources
+
+This slides borrow most of their content from the following ressouces:
 
 -   [R for Data Science (2e)](https://r4ds.hadley.nz/%60Quarto%60), written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.
 -   [Literate programming](https://en.wikipedia.org/wiki/Literate_programming)
