@@ -1205,7 +1205,11 @@ format:
     toc: true
 ```
 
-## Presentations
+## Other useful formats
+
+<br> <br>
+
+#### Presentations
 
 <br> <br>
 
@@ -1216,6 +1220,34 @@ format:
 <br>
 
 > - [Explore the source of this one.](https://github.com/rdatatoolbox/course-quarto/blob/main/sections/quarto.qmd)
+
+## Other useful formats
+
+#### Manuscripts
+
+:::{.callout-note}
+
+`Quarto manuscripts` is a recent format. To create a `Quarto Manuscript` you will have to clone a github template repository.
+
+:::
+
+
+[Quarto manuscript](https://quarto.org/docs/manuscripts/) projects are made for writing and publishing scholarly articles.
+
+A Quarto manuscript lets you:
+
+> - Use one or more notebooks or .qmd documents as the source of content and computations, and then publish these computations alongside the manuscript, allowing readers to dive into your code.
+
+> - Produce manuscripts in multiple formats (including LaTeX or MS Word formats required by journals), and give readers easy access to all of the formats through a manuscript website.
+
+:::{.fragment}
+The output of a Quarto manuscript is a website ([live example](https://quarto-ext.github.io/manuscript-template-jupyter/)).
+
+The article itself appears as the content of the website, and can include all the elements common to scholarly writing like figures, tables, equations, cross references and citations.
+
+The website also makes available other formats (e.g. PDF, Docx) as well as links to all of the computations used to create the article.
+:::
+
 
 
 ## Resources
