@@ -1,0 +1,1222 @@
+# What is `Quarto` ?
+
+## Literate programming
+
+`Quarto` implements the concept of *literate programming*.
+
+<br>
+
+> Literate programming is a programming paradigm introduced in 1984 by Donald Knuth in which a computer program is given as an explanation of how it works in a natural language, such as English, interspersed (embedded) with snippets of macros and traditional source code, from which compilable source code can be generated.
+
+::::: columns
+::: {.column .center width="50%"}
+**Initial concept**
+
+![](images/lit-prog-paper_fig1.png){width="80%"}
+:::
+
+::: {.column .center width="50%"}
+**Modern implementation with `Quarto`**
+
+![](images/quarto-process.png)
+:::
+:::::
+
+## Multiple outputs
+
+> `Quarto` provides a unified authoring framework for data science, combining your code, its results, and your prose.
+
+> `Quarto` documents are fully reproducible, they automate the inclusion of the last versions of the results of an analysis, literally dozens of output formats are available: [Web pages]{.fragment .green}[, PDFs]{.fragment .orange}[, Word files]{.fragment .cyan}, [websites]{.fragment .purple}, [books]{.fragment .yellow}[, and more.]{.fragment}
+
+![](images/knitr-formats.png)
+
+## Relevant to many use cases
+
+According to Hadley Wickham `Quarto` files are designed to be used in three ways:
+
+> 1.  For communicating to decision-makers or to a more general audience, who want to focus on the conclusions, not the code behind the analysis.
+
+
+> 2.  For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code).
+
+
+> 3.  As an environment in which to *do* data science, as a modern-day lab notebook where you can capture not only what you did, but also what you were thinking. Recall Galileo and his notebook.
+
+:::{.fragment}
+
+![](images/goodman_2014_fig1.png){fig-align="center" width="40%"}
+
+:::
+
+
+## Tailored to modern data science
+
+`Quarto` is a language agnostic command line interface (CLI)
+
+<br>
+
+``` bash
+me@my_beautiful_linux_computer:~$ quarto --help
+```
+
+. . .
+
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|15|"
+
+  Usage:   quarto
+  Version: 1.4.549
+
+  Description:
+
+    quarto CLI
+
+  Options:
+
+    -h, --help     - Show this help.                            
+    -V, --version  - Show the version number for this program.  
+
+  Commands:
+
+    render     [input] [args...]     - Render files or projects to various document types.
+    preview    [file] [args...]      - Render and preview a document or website project.  
+    serve      [input]               - Serve a Shiny interactive document.                
+    create     [type] [commands...]  - Create a `Quarto` project or extension               
+    use        <type> [target]       - Automate document or project setup tasks.          
+    add        <extension>           - Add an extension to this folder or project         
+    update     [target...]           - Updates an extension or global dependency.         
+    remove     [target...]           - Removes an extension.                              
+    convert    <input>               - Convert documents to alternate representations.    
+    pandoc     [args...]             - Run the version of Pandoc embedded within `Quarto`.  
+    typst      [args...]             - Run the version of Typst embedded within `Quarto`.   
+    run        [script] [args...]    - Run a TypeScript, R, Python, or Lua script.        
+    install    [target...]           - Installs a global dependency (TinyTex or Chromium).
+    uninstall  [tool]                - Removes an extension.                              
+    tools                            - Display the status of `Quarto` installed dependencies
+    publish    [provider] [path]     - Publish a document or project to a provider.       
+    check      [target]              - Verify correct functioning of `Quarto` installation. 
+    help       [command]             - Show this help or the help of a sub-command.       
+```
+
+## The machinery
+
+<br>
+
+![](images/modern-literate.png)
+
+## The machinery
+
+<br> <br>
+
+![](images/qmd-knitr.jpeg)
+
+## The machinery
+
+<br> <br>
+
+![](images/qmd-jupyter.jpg)
+
+# Meet `Quarto`
+
+## Authoring `Quarto` documents
+
+When working with `R` using `Rstudio`, `Quarto` comes pre-installed with recent versions of `Rstudio`.
+
+To create a new document in RStudio, go to **File** \> **New File** \> **Quarto Document**:
+
+![](images/new-doc.png){fig-align="center"}
+
+## Authoring `Quarto` documents
+
+Source editor
+
+![](images/create-qmd-1.png){fig-align="center" width="80%"}
+
+## Authoring `Quarto` documents
+
+[Visual editor](https://quarto.org/docs/visual-editor/)
+
+![](images/create-qmd-2.png){fig-align="center" width="80%"}
+
+## Authoring `Quarto` documents
+
+Back to source ...
+
+![](images/create-qmd-3.png){fig-align="center" width="80%"}
+
+## Authoring `Quarto` documents
+
+Use the **Render** button in the RStudio IDE to render the file and preview the output with a single click or keyboard shortcut (<kbd>⌘</kbd> / <kbd>ctrl</kbd> <kbd>⇧</kbd><kbd>K</kbd>).
+
+![](images/rstudio-render.png){fig-align="center"}
+
+Automatically render on save by checking the Render on Save option:
+
+![](images/rstudio-render-on-save.png){fig-align="center"}
+
+`Quarto` files can also be rendered programmatically using the quarto command line:
+
+``` bash
+quarto render my_quarto_file.qmd
+```
+
+or with the `quarto` `R` package:
+
+``` bash
+quarto::render("my_quarto_file.qmd")
+```
+
+## Anatomy of a `qmd` file
+
+It contains three types of content:
+
+1.  An (optional) YAML header surrounded by ---s.
+2.  Text mixed with simple text formatting like \## heading, **bolds** and *italics*.
+3.  Chunks of R code surrounded by \`\`\`{r}.
+
+::::: columns
+::: {.column .center width="60%"}
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|1-6|8-15|17-29|"
+
+---
+title: "Hello, Penguins"
+format: html
+execute:
+  echo: false
+---
+
+## Meet the penguins
+
+The __penguins__ data contains size measurements for 
+penguins from three islands in the Palmer Archipelago, 
+Antarctica.
+
+The _three_ species of penguins have quite distinct 
+distributions of physical dimensions (@fig-penguins).
+
+#| label: fig-penguins
+#| fig-cap: "Dimensions of penguins across three species."
+#| warning: false
+library(tidyverse, quietly = TRUE)
+library(palmerpenguins)
+penguins |>
+  ggplot(aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  scale_color_manual(
+    values = c("darkorange", "purple", "cyan4")) +
+  theme_minimal()
+
+```
+:::
+
+::: {.column .center width="40%"}
+![](images/penguins_render.png)
+:::
+:::::
+
+# YAML header
+
+## YAML header
+
+The YAML header is demarcated by three dashes (---) on either end. It informs on some documents meta-data and sets up many generic and output format specific options. The YAML consists of `key: values` pairs. The **colon** and **space** are **required**.
+
+YAML header can be very simple
+
+```{bash}
+#| eval: false
+#| echo: true
+
+---
+title: "Hello, Penguins"
+format: html
+execute:
+  echo: false
+---
+
+```
+
+## YAML header
+
+The YAML header is demarcated by three dashes (---) on either end. It informs on some documents meta-data and sets up many generic and output format specific options. The YAML consists of `key: values` pairs.  The **colon** and **space** are **required**.
+
+As well as much more elaborated, e.g. when [scholarly writing](https://quarto.org/docs/authoring/front-matter.html)
+
+```{bash}
+#| eval: false
+#| echo: true
+
+---
+title: "Toward a Unified Theory of High-Energy Metaphysics: Silly String Theory"
+date: 2008-02-29
+author:
+  - name: Josiah Carberry
+    id: jc
+    orcid: 0000-0002-1825-0097
+    email: josiah@psychoceramics.org
+    affiliation: 
+      - name: Brown University
+        city: Providence
+        state: RI
+        url: www.brown.edu
+abstract: > 
+  The characteristic theme of the works of Stone is 
+  the bridge between culture and society. ...
+keywords:
+  - Metaphysics
+  - String Theory
+license: "CC BY"
+copyright: 
+  holder: Josiah Carberry
+  year: 2008
+citation: 
+  container-title: Journal of Psychoceramics
+  volume: 1
+  issue: 1
+  doi: 10.5555/12345678
+funding: "The author received no specific funding for this work."
+---
+
+```
+
+## YAML header
+
+YAML headers can operate at the document level to manage execute options:
+
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|8|"
+
+---
+title: "Hello, Penguins"
+subtitle: "Penguins are vertebrates"
+execute:
+  echo: false
+  eval: true
+  warning: false
+  error: true
+---
+
+```
+
+. . .
+
+Or can set format specific options (here for html output):
+
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|7-8|"
+
+---
+title: "Hello, Penguins"
+subtitle: "Penguins are vertebrates"
+format:
+  html:
+    theme: united
+    code-fold: true
+    code-summary: "see the code"
+execute:
+  echo: true
+  eval: true
+  warning: false
+  error: true
+---
+
+```
+
+## YAML header
+
+All format specific options are listed in the [`Quarto` official documentation](https://quarto.org/docs/reference/).
+
+<br>
+
+**YAML Intelligence**: YAML code completion is available for project files, YAML front matter, and executable cell options:
+
+![](images/rstudio-yaml-completion.png){width="400" fig-align="center"}
+
+If you have incorrect YAML it will also be highlighted when documents are saved:
+
+![](images/rstudio-yaml-diagnostics.png){width="400" fig-align="center"}
+
+# Markdown
+
+## Markdown
+
+Quarto is based on Pandoc and uses its variation of markdown as its underlying document syntax. Pandoc markdown is an extended and slightly revised version of John Gruber’s [Markdown](https://daringfireball.net/projects/markdown/) syntax.
+
+<br>
+
+Markdown is a plain text format that is designed to be easy to write, and, even more importantly, easy to read:
+
+> A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions. – John Gruber
+
+<br>
+
+![](images/markdown-mark.svg){fig-align="center" width="20%"}
+
+<br>
+
+The following two slides provide examples of the most basic markdown syntax. See the [`Quarto` official website for more in-depth documentation](https://quarto.org/docs/authoring/markdown-basics.html).
+
+## Markdown
+
+::::: columns
+::: column
+<br> <br> <br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+### Text formatting
+
+*italic* **bold** ~~strikeout~~ `code`
+
+superscript^2^ subscript~2~
+
+[underline]{.underline} [small caps]{.smallcaps}
+
+### Lists
+
+-   Bulleted list item 1
+
+-   Item 2
+
+    -   Item 2a
+
+    -   Item 2b
+
+1.  Numbered list item 1
+
+2.  Item 2.
+
+The numbers are incremented automatically in the output.
+
+### Equations
+
+inline math: $E = mc^{2}$
+
+```
+:::
+
+::: column
+### Text formatting
+
+*italic* **bold** ~~strikeout~~ `code`
+
+superscript^2^ subscript~2~
+
+[underline]{.underline} [small caps]{.smallcaps}
+
+### Lists
+
+-   Bulleted list item 1
+
+-   Item 2
+
+    -   Item 2a
+
+    -   Item 2b
+
+1.  Numbered list item 1
+
+2.  Item 2.
+
+The numbers are incremented automatically in the output.
+
+### Equations
+
+inline math: $E = mc^{2}$
+:::
+:::::
+
+## Markdown
+
+::::: columns
+::: column
+<br> <br> <br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+### Links and images
+
+<https://rdatatoolbox.github.io/chapters/course-compendium.html>
+
+[rdatatoolbox is there](https://rdatatoolbox.github.io/)
+
+![optional caption text](images/logo-title-slide.png){fig-alt="rdatatoolbox logo"  width="20%"}
+
+### Tables
+
+| First Header | Second Header |
+|--------------|---------------|
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |
+
+```
+:::
+
+::: column
+### Links and images
+
+<https://rdatatoolbox.github.io/chapters/course-compendium.html>
+
+[rdatatoolbox is there](https://rdatatoolbox.github.io/)
+
+![optional caption text](images/logo-title-slide.png){fig-alt="rdatatoolbox logo" width="20%"}
+
+### Tables
+
+| First Header | Second Header |
+|--------------|---------------|
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |
+:::
+:::::
+
+## Markdown
+
+Rstudio's visual editor toolbar includes buttons for the most commonly used formatting commands:
+
+<br> <br> <br>
+
+![](https://quarto.org/docs/visual-editor/images/visual-editing-toolbar.png){fig-alt="A snippet of an RStudio window showing the options bar at the top of an RMarkdown document."}
+
+## Markdown
+
+Additional commands are available on the **Format**, **Insert**, and **Table** menus:
+
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------+
+| Format                                                                                        | Insert                                                                                        | Table                                                                                        |
++:=============================================================================================:+:=============================================================================================:+:============================================================================================:+
+| ![](https://quarto.org/docs/visual-editor/images/visual-editing-format-menu.png){width="60%"} | ![](https://quarto.org/docs/visual-editor/images/visual-editing-insert-menu.png){width="60%"} | ![](https://quarto.org/docs/visual-editor/images/visual-editing-table-menu.png){width="60%"} |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------+
+
+## Markdown
+
+Rstudio's visual editor toolbar includes buttons for the most commonly used formatting commands:
+
+![](https://quarto.org/docs/visual-editor/images/visual-editing-toolbar.png){fig-alt="A snippet of an RStudio window showing the options bar at the top of an RMarkdown document."}
+
+Check out the `Quarto` official documentation to learn more about visual markdown editing:
+
+-   [Technical Writing](https://quarto.org/docs/visual-editor/technical.html) covers features commonly used in scientific and technical writing, including citations, cross-references, footnotes, equations, embedded code, and LaTeX.
+
+-   [Content Editing](https://quarto.org/docs/visual-editor/content.html) provides more depth on visual editor support for tables, lists, pandoc attributes, CSS styles, comments, symbols/emojis, etc.
+
+-   [Shortcuts & Options](https://quarto.org/docs/visual-editor/options.html) documents the two types of shortcuts you can use with the editor: standard keyboard shortcuts and markdown shortcuts and describes various options for configuring the editor.
+
+-   [Markdown Output](https://quarto.org/docs/visual-editor/markdown.html) describes how the visual editor parses and writes markdown and describes various ways you can customize this.
+
+A complete guide to `Quarto` authoring is available in the [official documentation](https://quarto.org/docs/authoring).
+
+# Computations
+
+## Computations (using R)
+
+Code blocks that use braces around the language name (e.g. ```` ```{r} ````) are executable, and will be run by Quarto during render. Chunk options (optional), in YAML style, identified by #\| at the beginning of the line are used to set chunk-specific meta-data and behaviours.
+
+Going back to the penguins example:
+
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|17-29"
+
+---
+title: "Hello, Penguins"
+format: html
+execute:
+  echo: false
+---
+
+## Meet the penguins
+
+The __penguins__ data contains size measurements for 
+penguins from three islands in the Palmer Archipelago, 
+Antarctica.
+
+The _three_ species of penguins have quite distinct 
+distributions of physical dimensions (@fig-penguins).
+
+````{r}
+#| label: fig-penguins
+#| fig-cap: "Dimensions of penguins across three species."
+#| warning: false
+library(tidyverse, quietly = TRUE)
+library(palmerpenguins)
+penguins |>
+  ggplot(aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  scale_color_manual(
+    values = c("darkorange", "purple", "cyan4")) +
+  theme_minimal()
+````
+
+```
+
+## Computations (using R)
+
+Code blocks that use braces around the language name (e.g. ```` ```{r} ````) are executable, and will be run by Quarto during render. Chunk options (optional), in YAML style, identified by #\| at the beginning of the line are used to set chunk-specific meta-data and behaviours.
+
+Going back to the penguins example:
+
+::::: columns
+::: {.column width="65%"}
+```{bash}
+#| eval: false
+#| echo: true
+
+The _three_ species of penguins have quite distinct 
+distributions of physical dimensions (@fig-penguins).
+
+````{r}
+#| label: fig-penguins
+#| fig-cap: "Dimensions of penguins across three species."
+#| warning: false
+library(tidyverse, quietly = TRUE)
+library(palmerpenguins)
+penguins |>
+  ggplot(aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  scale_color_manual(
+    values = c("darkorange", "purple", "cyan4")) +
+  theme_minimal()
+````
+```
+
+> -   A chunk label ("fig-penguins") has been defined, it allows referencing (and auto-numbering) the plot produced by the code as a figure anywhere in the text (`@fig-penguins`).
+
+> -   A figure caption has been defined and is used in the rendered output.
+
+> -   Warnings have been disabled and are discarded from the rendered output.
+:::
+
+::: {.column width="35%"}
+![](images/penguins_render.png)
+:::
+:::::
+
+## Computations (using R)
+
+::::: columns
+::: column
+![](images/rstudio-inline-output.png){fig-align="center"}
+:::
+
+::: {.column .fragment}
+![](images/rstudio-render-options.png){fig-align="center"}
+:::
+:::::
+
+In addition to rendering the complete document to view the results of code chunks you can also run each code chunk interactively in the `RStudio` editor by clicking the icon or keyboard shortcut (`Cmd/Ctrl + Shift + Enter`).
+
+`RStudio` executes the code and displays the results either inline within your file or in the Console, depending on your preference.
+
+## Computations (figures)
+
+**Multiple Figures**: Put two plots side by side:
+
+``` r
+#| layout-ncol: 2
+#| warning: false
+
+ggplot(penguins, 
+       aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species, shape = species))
+
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity")
+```
+
+## Computations (figures)
+
+Put two plots side by side:
+
+![](images/side-plots.png)
+
+## Computations (figures)
+
+More complex layouts:
+
+``` r
+#| label: fig-complex
+#| layout: [[30, 70], [100]]
+#| fig-cap: multiple aspects of penguins
+#| fig-subcap: 
+#|   - "scatter plot"
+#|   - "flipper length"
+#|   - "boday mass"
+
+ggplot(penguins, 
+aes(x = flipper_length_mm, y = bill_length_mm)) +
+geom_point(aes(color = species, shape = species))
+
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+geom_histogram(aes(fill = species), 
+         alpha = 0.5, 
+         position = "identity")
+
+ggplot(data = penguins, aes(x = body_mass_g)) +
+geom_histogram(aes(fill = species), 
+         alpha = 0.5, 
+         position = "identity")
+```
+
+## Computations (figures)
+
+More complex layouts:
+
+![](images/fig-layout-complex.png){width="40%" fig-align="center"}
+
+# `Quarto` for reproducible research
+
+# Cross references / Citations / Projects
+
+## Cross references
+
+> Quarto cross references provide automatic numbering and reference creation for figures, tables, equations, sections, listings, theorems, and proofs. In books, cross references work the same way except they can reach across chapters.
+
+You can cross reference almost everything : [figures]{.green}, [tables]{.yellow}, [equations]{.purple}, [sections]{.cyan}, ...
+
+<br>
+
+#### Cross reference identifiers
+
+To reference an item later we need an identifier for it.
+
+Identifiers must start with the type of the item:
+
+-   figures: fig-
+
+-   tables: tbl-
+
+-   equations: eq-
+
+-   section: sec-
+
+Check reserved/appropriate prefixes at the [official documentation](https://quarto.org/docs/authoring/cross-references.html).
+
+## Cross references (non computational content)
+
+**Figures:** To create a cross-referenceable **figure** and then refer to it:
+
+```{bash}
+#| eval: false
+#| echo: true
+
+![Elephant](elephant.png){#fig-elephant}
+
+See @fig-elephant for an illustration.
+
+```
+
+:::{.fragment}
+Or, using `divs` :
+
+```{bash}
+#| eval: false
+#| echo: true
+
+::: {#fig-elephant}
+
+![](elephant.png)
+
+An Elephant
+:::
+
+See @fig-elephant for an illustration.
+
+```
+:::
+
+:::{.fragment}
+Useful for sub-figures:
+
+::::: columns
+::: column
+<br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+::: {#fig-elephants layout-ncol=2}
+
+![Surus](surus.png){#fig-surus}
+
+![Hanno](hanno.png){#fig-hanno}
+
+Famous Elephants
+:::
+
+See @fig-elephants for examples. In particular, @fig-hanno.
+```
+:::
+
+::: column
+![](images/crossref-subfigures.png)
+:::
+:::::
+
+:::
+## Cross references (non computational content)
+
+#### Tables
+
+For markdown tables, add a caption below the table, then include a #tbl- label in braces at the end of the caption. For example:
+
+```{bash}
+#| echo: true
+#| eval: false
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+: My Caption {#tbl-letters}
+
+See @tbl-letters.
+
+```
+
+Or using the `div` syntax:
+
+```{bash}
+#| echo: true
+#| eval: false
+
+::: {#tbl-letters}
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+My Caption
+
+::: 
+
+```
+
+## Cross references (non computational content)
+
+<br> <br>
+
+#### Sub-tables
+
+::::: columns
+::: column
+```{bash}
+#| echo: true
+#| eval: false
+
+
+::: {#tbl-panel layout-ncol=2}
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+: First Table {#tbl-first}
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+: Second Table {#tbl-second}
+
+Main Caption
+:::
+
+See @tbl-panel for details, especially @tbl-second.
+```
+:::
+
+::: column
+![](images/crossref-subtable.png)
+:::
+:::::
+
+## Cross references (non computational content)
+
+<br> <br>
+
+#### Equations
+
+Provide an #eq- label immediately after an equation to make it referenceable. For example:
+
+```{bash}
+#| eval: false
+#| echo: true
+
+Black-Scholes (@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options:
+
+$$
+\frac{\partial \mathrm C}{ \partial \mathrm t } + \frac{1}{2}\sigma^{2} \mathrm S^{2}
+\frac{\partial^{2} \mathrm C}{\partial \mathrm S^2}
+  + \mathrm r \mathrm S \frac{\partial \mathrm C}{\partial \mathrm S}\ =
+  \mathrm r \mathrm C 
+$$ {#eq-black-scholes}
+
+```
+
+<br> <br>
+
+:::{.fragment}
+
+Black-Scholes (@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options:
+
+$$
+\frac{\partial \mathrm C}{ \partial \mathrm t } + \frac{1}{2}\sigma^{2} \mathrm S^{2}
+\frac{\partial^{2} \mathrm C}{\partial \mathrm S^2}
+  + \mathrm r \mathrm S \frac{\partial \mathrm C}{\partial \mathrm S}\ =
+  \mathrm r \mathrm C 
+$$ {#eq-black-scholes}
+
+:::
+
+## Cross references (computations)
+
+<br> <br>
+
+**Figures:**
+
+::::: columns
+::: column
+<br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+#| label: fig-plot
+#| fig-cap: "Plot"
+
+plot(cars)
+
+For example, see @fig-plot.
+
+```
+:::
+
+::: column
+![](images/crossref-figure-r.png)
+:::
+:::::
+
+## Cross references (computations)
+
+<br> <br>
+
+**Tables:**
+
+::::: columns
+::: column
+<br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+#| label: tbl-iris
+#| tbl-cap: "Iris Data"
+
+knitr::kable(head(iris))
+
+```
+:::
+
+::: column
+![](images/crossref-table-knitr.png)
+:::
+:::::
+
+## Cross references (computations)
+
+<br> <br>
+
+**Sub-tables:**
+
+::::: columns
+::: column
+<br>
+
+```{bash}
+#| eval: false
+#| echo: true
+
+#| label: tbl-tables
+#| tbl-cap: "Tables"
+#| tbl-subcap:
+#|   - "Cars"
+#|   - "Pressure"
+#| layout-ncol: 2
+
+knitr::kable(head(cars))
+knitr::kable(head(pressure))
+
+```
+:::
+
+::: column
+![](images/crossref-subtable-knitr.png)
+:::
+:::::
+
+As always, check the [official documentation](https://quarto.org/docs/authoring/cross-references.html).
+
+## Citations
+
+Quarto uses Pandoc to automatically format in text citations and create a reference list properly styled. You'll need:
+
+-   A quarto document formatted with citations (see next slide).
+
+-   A bibliographic data source, for example a BibLaTeX (.bib) or BibTeX (.bibtex) file. This can be automatically generated when using the visual `Quarto` editor.
+
+-   Optionally, a CSL file which specifies the formatting to use when generating the citations and bibliography.
+
+<br> <br>
+
+:::{.fragment}
+
+#### Bibliography Files
+
+Quarto supports bibliography files in a wide variety of formats including BibLaTeX and CSL. Add a bibliography to your document using the bibliography YAML metadata field. For example:
+
+```{bash}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "|3"
+
+---
+title: "Oouh là là y'a des accents dans le titre"
+bibliography: references.bib
+---
+
+```
+
+:::
+## Citations
+
+Quarto uses the standard Pandoc markdown representation for citations (e.g. `[@citation]`) --- citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of '\@' + the citation identifier from the database.
+
+<br>
+
+Here are some examples:
+
++---------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------+
+| Markdown Format                       | Output (default)                                                  | Output(`csl: diabetologia.csl`) \|                  |
++=======================================+===================================================================+=====================================================+
+| ```                                   | Blah Blah [see @knuth1984, pp. 33-35; also @wickham2015, chap. 1] | Blah Blah see \[1\], pp. 33-35; also \[1\], chap. 1 |
+| Blah Blah [see @knuth1984, pp. 33-35; |                                                                   |                                                     |
+| also @wickham2015, chap. 1]           |                                                                   |                                                     |
+| ```                                   |                                                                   |                                                     |
++---------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------+
+| ```                                   | Blah Blah [@knuth1984, pp. 33-35, 38-39 and passim]               | Blah Blah \[1\], pp. 33-35, 38-39 and passim        |
+| Blah Blah [@knuth1984, pp. 33-35,     |                                                                   |                                                     |
+| 38-39 and passim]                     |                                                                   |                                                     |
+| ```                                   |                                                                   |                                                     |
++---------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------+
+| ```                                   | Blah Blah [@wickham2015; @knuth1984].                             | Blah Blah \[1, 2\].                                 |
+| Blah Blah [@wickham2015; @knuth1984]. |                                                                   |                                                     |
+| ```                                   |                                                                   |                                                     |
++---------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------+
+| ```                                   | Wickham says blah [-@wickham2015]                                 | Wickham says blah \[1\]                             |
+| Wickham says blah [-@wickham2015]     |                                                                   |                                                     |
+| ```                                   |                                                                   |                                                     |
++---------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------+
+
+<br>
+
+You can also write in-text citations, as follows:
+
++-------------------------------+-------------------------------+----------------------------+
+| Markdown Format               | Output (author-date format)   | Output (numerical format)  |
++===============================+===============================+============================+
+| ```                           | @knuth1984 says blah.         | \[1\] says blah.           |
+| @knuth1984 says blah.         |                               |                            |
+| ```                           |                               |                            |
++-------------------------------+-------------------------------+----------------------------+
+| ```                           | @knuth1984 [p. 33] says blah. | \[1\] \[p. 33\] says blah. |
+| @knuth1984 [p. 33] says blah. |                               |                            |
+| ```                           |                               |                            |
++-------------------------------+-------------------------------+----------------------------+
+
+## Citations
+
+<br> <br>
+
+#### Visual editor
+
+Visual mode uses the standard Pandoc markdown representation for citations (e.g. `[@citation]`). Citations can be inserted from a variety of sources:
+
+1.  **Your document bibliography.** (`bibliography: references.bib`)
+2.  **Zotero** personal or group libraries.
+3.  **DOI** (Document Object Identifier) references.
+4.  Searches of [Crossref](https://www.crossref.org/), [DataCite](https://datacite.org/), or [PubMed](https://pubmed.ncbi.nlm.nih.gov/).
+
+If you insert citations from Zotero, DOI look-up, or a search then they are automatically added to your document bibliography.
+
+## Citations
+
+#### Visual editor
+
+
+Use the **Insert > Citation** or the `ctrl + shift + F8` keyboard shortcut to show the **Insert Citation** dialog:
+
+![](images/visual-editing-citation-search.png){width="60%" fig-align="center"}
+
+Note that you can insert multiple citations by using the add button on the right side of the item display.
+
+## Quarto projects
+
+When projects are larger than a simple analysis (e.g. a paper with additional analyses presented in supplementary material), it is useful to split the project reporting in several `Quarto` documents.
+
+:::{.fragment}
+[`Quarto projects`](https://quarto.org/docs/projects/quarto-projects.html) are such collections of `Quarto documents`, 
+
+<br>
+
+Quarto projects are directories that provide:
+
+> - A way to render all or some of the files in a directory with a single command (e.g. quarto render myproject).
+
+> - A way to share YAML configuration across multiple documents.
+
+> - The ability to redirect output artifacts to another directory.
+
+:::
+
+<br>
+
+:::{.fragment}
+
+In addition, projects can have special “types” that introduce additional behavior (e.g. [websites](https://quarto.org/docs/websites/), [books](https://quarto.org/docs/books/) or [manuscripts](https://quarto.org/docs/manuscripts/)).
+
+:::
+
+## Quarto projects
+
+#### Project Metadata
+
+All Quarto projects include a `_quarto.yml` configuration file. Any document rendered within the project directory will automatically inherit the metadata defined at the project level.
+
+The configuration file contains both global options that apply to all formats (e.g. toc and bibliography) as well as format-specific options:
+
+```{bash}
+#| eval: false
+#| echo: true
+
+project:
+  output-dir: _output
+
+toc: true
+number-sections: true
+bibliography: references.bib  
+  
+format:
+  html:
+    css: styles.css
+    html-math-method: katex
+  pdf:
+    documentclass: report
+    margin-left: 30mm
+    margin-right: 30mm
+
+```
+
+## Quarto projects
+
+#### Project Metadata
+
+For a [book](https://quarto.org/docs/books/):
+
+```{bash}
+#| eval: false
+#| echo: true
+
+project:
+  type: book
+
+book:
+  title: "mybook"
+  author: "Jane Doe"
+  date: "6/23/2023"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+  epub:
+    cover-image: cover.png
+```
+
+
+## Quarto projects
+
+#### Project Metadata
+
+For a [website](https://quarto.org/docs/websites/):
+
+```{bash}
+#| eval: false
+#| echo: true
+
+project:
+  type: website
+
+website:
+  title: "today"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+```
+
+
+# Resources
+
+## `Quarto` resources
+
+-   [`Quarto` guide](https://quarto.org/docs/guide/)
+-   [Markdown syntax](https://quarto.org/docs/authoring/markdown-basics.html)
+-   [RevealJS guide](https://quarto.org/docs/presentations/revealjs/)
+
+## Slides resources
+
+-   [R for Data Science (2e)](https://r4ds.hadley.nz/%60Quarto%60), written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund.
+-   [Literate programming](https://en.wikipedia.org/wiki/Literate_programming)
+-   Artwork from “Hello, Quarto” keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by [Allison Horst](https://allisonhorst.com/allison-horst).
+-   [`Quarto` website](https://quarto.org/)

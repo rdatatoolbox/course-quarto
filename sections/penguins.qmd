@@ -1,0 +1,59 @@
+---
+title: "Hello, Penguins"
+format:
+  html:
+    theme: united
+    code-fold: true
+    code-summary: "see the code"
+execute:
+  echo: false
+  eval: true
+  warning: false
+  error: true
+---
+
+## Meet the penguins
+
+The **penguins** data contains size measurements for penguins from three islands in the Palmer Archipelago, Antarctica.
+
+The *three* species of penguins have quite distinct distributions of physical dimensions (@fig-penguins).
+
+```{r}
+#| label: fig-penguins
+#| fig-cap: "Dimensions of penguins across three species."
+#| warning: false
+library(tidyverse, quietly = TRUE)
+library(palmerpenguins)
+penguins |>
+  ggplot(aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  scale_color_manual(
+    values = c("darkorange", "purple", "cyan4")) +
+  theme_minimal()
+```
+
+
+```{r}
+#| label: fig-complex
+#| layout: [[30, 70], [100]]
+#| fig-cap: multiple aspects of penguins
+#| fig-subcap: 
+#|   - "scatter plot"
+#|   - "flipper length"
+#|   - "boday mass"
+
+ggplot(penguins, 
+       aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species, shape = species))
+
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity")
+
+ggplot(data = penguins, aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity")
+
+```

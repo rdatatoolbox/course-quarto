@@ -1,0 +1,84 @@
+::: {.title-slide-container}
+::: {.title-slide-content}
+:::: {.columns}
+
+<!-- Title slide logo -->
+::: {.column .logo width="32%"}
+![](images/logo-title-slide.png)
+:::
+
+<!-- Title slide content -->
+::: {.column .information width="68%"}
+
+::: {.title}
+An introduction to Quarto
+:::
+
+::: {.subtitle}
+A unified authoring framework for data science
+:::
+
+::: {.date}
+```{r}
+#| echo: false
+#| results: asis
+olocale <- Sys.getlocale("LC_TIME")
+invisible(Sys.setlocale("LC_TIME", "en_US.UTF-8"))
+cat(format(Sys.Date(), "%B %Y"))
+invisible(Sys.setlocale("LC_TIME", olocale))
+```
+:::
+
+:::: {.columns .authors}
+
+::: {.column .author width="32%"}
+François Guilhaumon<br/>
+[{{< fa envelope >}}](mailto:francois.guilhaumon@ird.fr)
+[{{< fa globe >}}](https://fguyilhaumon.github.io)
+[{{< fa brands orcid >}}](https://orcid.org/0000-0003-4707-8932)
+[{{< ai google-scholar >}}](https://scholar.google.fr/citations?user=jJwtZT0AAAAJ)
+:::
+
+<!-- Close {.columns .authors} -->
+::::
+
+:::: {.columns .affiliations}
+
+::: {.column .affiliation width="32%"}
+Research scientist
+<br/>
+<code>@IRD</code>
+&nbsp;
+[{{< fa globe >}}](https://ird.fr)
+:::
+
+<!-- Second affiliation -->
+::: {.column .affiliation width="32%"}
+<!--
+{{< fa house >}} &nbsp;[Affiliation](affiliation-url)
+-->
+:::
+
+<!-- Third affiliation -->
+::: {.column .affiliation width="32%"}
+<!--
+{{< fa house >}} &nbsp;[Affiliation](affiliation-url)
+-->
+:::
+
+
+
+<!-- Close {.columns .affiliations} -->
+::::
+
+<!-- Close {.column .information} -->
+:::
+
+<!-- Close {.columns} -->
+::::
+
+<!-- Close {.title-slide-content} -->
+:::
+
+<!-- Close {.title-slide-container} -->
+:::
