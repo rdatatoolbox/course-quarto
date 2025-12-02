@@ -106,18 +106,6 @@ me@my_beautiful_linux_computer:~$ quarto --help
 
 ![](images/modern-literate.png)
 
-## The machinery
-
-<br> <br>
-
-![](images/qmd-knitr.jpeg)
-
-## The machinery
-
-<br> <br>
-
-![](images/qmd-jupyter.jpg)
-
 # Meet `Quarto`
 
 ## Authoring `Quarto` documents
@@ -127,6 +115,15 @@ When working with `R` using `Rstudio`, `Quarto` comes pre-installed with recent 
 To create a new document in RStudio, go to **File** \> **New File** \> **Quarto Document**:
 
 ![](images/new-doc.png){fig-align="center"}
+
+## Authoring `Quarto` documents
+
+When working with `R` using `Positron`, `Quarto` comes pre-installed with `Positron`.
+
+To create a new document in Positron, go to **File** \> **New File** \> **Quarto Document**:
+
+![](images/positron_new-doc.png){fig-align="center"}
+
 
 ## Authoring `Quarto` documents
 
